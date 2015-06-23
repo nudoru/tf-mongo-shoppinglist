@@ -19,3 +19,23 @@ exports.list = function(callback, errback) {
     callback(items);
   });
 };
+
+exports.remove = function(id, callback, errback) {
+  Item.remove({_id: id}, function(err, items){
+    if(err) {
+      errback(err);
+      return;
+    }
+    callback(items);
+  });
+};
+
+exports.update = function(id, name, callback, errback) {
+  Item.findByIdAndUpdate(id, { $set: { name: name }}, function(err, item) {
+    if(err) {
+      errback(err);
+      return;
+    }
+    callback(item);
+  });
+};
