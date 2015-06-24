@@ -24,7 +24,7 @@ router.post('/items', function(req, res) {
 // Update
 router.put('/items/:id', function(req, res) {
   Item.update(req.params.id, req.body.name, function(item) {
-    res.status(201).json(item);
+    res.status(200).json(item);
   }, function(err) {
     res.status(400).json(err);
   });

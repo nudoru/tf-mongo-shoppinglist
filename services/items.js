@@ -31,6 +31,7 @@ exports.remove = function(id, callback, errback) {
 };
 
 exports.update = function(id, name, callback, errback) {
+  console.log('updating',id,'to',name);
   Item.findByIdAndUpdate(id, { $set: { name: name }}, function(err, item) {
     if(err) {
       errback(err);

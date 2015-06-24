@@ -18,15 +18,8 @@ describe('Shopping List', function() {
         });
     });
 
-    after(function(done) {
-        Item.remove(function() {
-            done();
-        });
-    });
-});
+    var firstID;
 
-/*
-describe('Shopping List', function() {
     it('should list items on GET', function(done) {
         chai.request(app)
             .get('/items')
@@ -36,16 +29,21 @@ describe('Shopping List', function() {
                 res.body.should.be.a('array');
                 res.body.should.have.length(3);
                 res.body[0].should.be.a('object');
-                res.body[0].should.have.property('id');
+                res.body[0].should.have.property('_id');
                 res.body[0].should.have.property('name');
-                res.body[0].id.should.be.a('number');
+                res.body[0]['_id'].should.be.a('string');
                 res.body[0].name.should.be.a('string');
                 res.body[0].name.should.equal('Broad beans');
                 res.body[1].name.should.equal('Tomatoes');
                 res.body[2].name.should.equal('Peppers');
+
+                // capture ID of first item for later test
+                firstID = res.body[0]['_id'];
+
                 done();
             });
     });
+
     it('should add an item on post', function(done) {
         chai.request(app)
             .post('/items')
@@ -55,14 +53,42 @@ describe('Shopping List', function() {
                 res.should.be.json;
                 res.body.should.be.a('object');
                 res.body.should.have.property('name');
-                res.body.should.have.property('id');
+                res.body.should.have.property('_id');
                 res.body.name.should.be.a('string');
-                res.body.id.should.be.a('number');
+                res.body['_id'].should.be.a('string');
                 res.body.name.should.equal('Pickles');
-                res.body.id.should.equal(3);
                 done();
             });
     });
+
+    it('should edit an item on put', function(done) {
+        chai.request(app)
+            .put('/items/'+firstID)
+            .send({'name':'Baked Beans'})
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.be.a('object');
+                res.body.should.have.property('name');
+                res.body.should.have.property('_id');
+                res.body.name.should.be.a('string');
+                res.body['_id'].should.be.a('string');
+                res.body.name.should.equal('Baked Beans');
+                res.body['_id'].should.equal(firstID);
+                done();
+            });
+    });
+
+    after(function(done) {
+        Item.remove(function() {
+            done();
+        });
+    });
+});
+
+/*
+describe('Shopping List', function() {
+
     it('should edit an item on put', function(done) {
         chai.request(app)
             .put('/items/0')
