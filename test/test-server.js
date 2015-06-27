@@ -80,6 +80,24 @@ describe('Shopping List', function() {
             });
     });
 
+    it('should delete an item on delete', function(done) {
+        chai.request(app)
+            .put('/items/'+firstID)
+            .send({'name':'Baked Beans','id':firstID})
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.be.a('object');
+                res.body.should.have.property('name');
+                res.body.should.have.property('_id');
+                res.body.name.should.be.a('string');
+                res.body['_id'].should.be.a('string');
+                res.body.name.should.equal('Baked Beans');
+                res.body['_id'].should.equal(firstID);
+                done();
+            });
+    });
+
     after(function(done) {
         Item.remove(function() {
             done();
@@ -90,23 +108,7 @@ describe('Shopping List', function() {
 /*
 describe('Shopping List', function() {
 
-    it('should edit an item on put', function(done) {
-        chai.request(app)
-            .put('/items/0')
-            .send({'name':'Baked Beans','id':'0'})
-            .end(function(err, res) {
-                res.should.have.status(200);
-                res.should.be.json;
-                res.body.should.be.a('object');
-                res.body.should.have.property('name');
-                res.body.should.have.property('id');
-                res.body.name.should.be.a('string');
-                res.body.id.should.be.a('number');
-                res.body.name.should.equal('Baked Beans');
-                res.body.id.should.equal(0);
-                done();
-            });
-    });
+
     it('should delete an item on delete', function(done) {
         chai.request(app)
             .delete('/items/1')
