@@ -106,26 +106,7 @@ describe('Shopping List', function() {
 });
 
 /*
-describe('Shopping List', function() {
 
-
-    it('should delete an item on delete', function(done) {
-        chai.request(app)
-            .delete('/items/1')
-            .send({'name':'Tomatoes','id':'1'})
-            .end(function(err, res) {
-                res.should.have.status(200);
-                res.should.be.json;
-                res.body.should.be.a('object');
-                res.body.should.have.property('name');
-                res.body.should.have.property('id');
-                res.body.name.should.be.a('string');
-                res.body.id.should.be.a('number');
-                res.body.name.should.equal('Tomatoes');
-                res.body.id.should.equal(1);
-                done();
-            });
-    });
     it('should return error on delete invalid item', function(done) {
         chai.request(app)
             .delete('/items/10')
