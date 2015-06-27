@@ -62,6 +62,7 @@ describe('Shopping List', function() {
     });
 
     it('should edit an item on put', function(done) {
+        //console.log('test: ',firstID);
         chai.request(app)
             .put('/items/'+firstID)
             .send({'name':'Baked Beans'})
